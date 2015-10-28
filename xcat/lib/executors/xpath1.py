@@ -3,6 +3,7 @@ import string
 
 from . import BaseExecutor, XMLNode
 from ..xpath import count, string_length, substring, translate, normalize_space
+from ..xpath import string as to_string
 from ..features.substring_search import EfficientSubstringSearch
 
 
@@ -20,6 +21,7 @@ class XPath1Executor(BaseExecutor):
 
     @asyncio.coroutine
     def get_string(self, expression):
+        expression = to_string(expression)
         returner = []
         string_count = yield from self.string_length(expression)
 
