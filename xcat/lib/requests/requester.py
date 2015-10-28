@@ -74,9 +74,10 @@ class RequestMaker(object):
                 data = None
             else:
                url = self.url
-
-            response = yield from aiohttp.request(self.method, url,  data=data)
+            connector = aiohttp.TCPConnector(verify_ssl=False)
+            response = yield from aiohttp.request(self.method, url,  data=data, connector=connector)
             body = (yield from response.read_and_close()).decode("utf-8")
+            connector.close()
             return response, body
 
     def send_request(self, payload):
