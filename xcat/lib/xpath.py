@@ -15,16 +15,21 @@ class ExpressionSugar(object):
         return self.expr("!=", other)
 
     def __lt__(self, other):
-        return self.expr("<", other)
+        # a < b <=> a mod b = a 
+        return Expression(" (%s mod %s = %s) and (%s != %s) " % (self.value(),other, self.value(), other, self.value()))
 
     def __gt__(self, other):
-        return self.expr(">", other)
+        # a > b <=> b < a <=> b mod a = b 
+        return Expression(" (%s mod %s = %s) and (%s != %s) " % (other, self.value(),other, other, self.value()))
 
     def __le__(self, other):
-        return self.expr("<=", other)
+        # a <= b <=> 
+        raise NotImplementedError()
 
     def __ge__(self, other):
-        return self.expr(">=", other)
+        # a >= b <=> a mod b != a 
+        raise NotImplementedError()
+        return Expression(" %s mod %s != %s " % (self.value(),other, self.value()))
 
     def __add__(self, other):
         return self.expr("+", other)
