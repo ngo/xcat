@@ -33,7 +33,7 @@ colorama.init()
 #@click.option("--error", "detection_method", flag_value="error", help="match_string indicates an error response")
 
 @click.option("--loglevel", type=click.Choice(["debug", "info", "warn", "error"]), default="error")
-@click.option("--logfile", type=click.File("wb", encoding="utf-8"), default="-")
+@click.option("--logfile", type=click.File("w", encoding="utf-8"), default="-")
 
 @click.option("--limit", type=click.INT, help="Maximum number of concurrent request sent to the server", default=20)
 
@@ -130,7 +130,7 @@ def run(ctx, injector, xversion):
 
 @run.command(help="Attempt to retrieve the whole XML document")
 @click.option("--query", default="/*[1]", help="Query to retrieve. Defaults to root node (/*[1])")
-@click.option("--output", type=click.File('wb'), default="-", help="Location to output XML to")
+@click.option("--output", type=click.File('w'), default="-", help="Location to output XML to")
 @click.option("--format", type=click.Choice(["xml", "json"]), default="xml", help="Format for output")
 @click.pass_context
 def retrieve(ctx, query, output, format):
@@ -142,7 +142,7 @@ def retrieve(ctx, query, output, format):
 
 @run.command(help="Attempt to retrieve an overview of the XML document. This will only return partial information about the structure of the document.")
 @click.option("--query", default="/*[1]", help="Query to retrieve. Defaults to root node (/*[1])")
-@click.option("--output", type=click.File('wb'), default="-", help="Location to output XML to")
+@click.option("--output", type=click.File('w'), default="-", help="Location to output XML to")
 @click.option("--format", type=click.Choice(["xml", "json"]), default="xml", help="Format for output")
 @click.pass_context
 def simple(ctx, query, output, format):
